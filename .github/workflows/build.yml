@@ -4,12 +4,29 @@ on:
   #Manually trigger workflow runs
   workflow_dispatch:
     inputs:
-      logLevel:
-        description: 'Log level'     
+      TARGET_ENVIRONMENT:
+        type: choice
+        description: 'TARGET_ENVIRONMENT'     
         required: true
-        default: 'warning'
-      tags:
-        description: 'Test scenario tags'  
+        options: 
+        - UPDATE_CONFIG
+        - INT3
+      TARGET_APPS:
+        type: check
+        description: 'TARGET_APPS'  
+      PERFORM_BUILD_DEPLOY:
+        type: check
+        description: 'PERFORM_BUILD_DEPLOY' 
+      PERFORM_TESTING :
+        type: check
+        description: 'PERFORM_TESTING' 
+      PARALLELIZE_DEPLOY  :
+        type: check
+        description: 'PARALLELIZE_DEPLOY' 
+      PARALLELIZE_TESTING :
+        type: check
+        description: 'PARALLELIZE_TESTING' 
+  
   #Trigger the workflow on push from the main branch
   push:
     branches:
