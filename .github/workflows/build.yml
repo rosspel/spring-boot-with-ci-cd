@@ -12,19 +12,19 @@ on:
         - UPDATE_CONFIG
         - INT3
       TARGET_APPS:
-        type: check
+        type: boolean
         description: 'TARGET_APPS'  
       PERFORM_BUILD_DEPLOY:
-        type: check
+        type: boolean
         description: 'PERFORM_BUILD_DEPLOY' 
       PERFORM_TESTING :
-        type: check
+        type: boolean
         description: 'PERFORM_TESTING' 
       PARALLELIZE_DEPLOY  :
-        type: check
+        type: boolean
         description: 'PARALLELIZE_DEPLOY' 
       PARALLELIZE_TESTING :
-        type: check
+        type: boolean
         description: 'PARALLELIZE_TESTING' 
   
   #Trigger the workflow on push from the main branch
