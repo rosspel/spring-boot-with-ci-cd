@@ -1,0 +1,262 @@
+EnvConfig:
+  UPDATE_CONFIG:
+    - Name: UpdateConfig
+      TriggerOnCron: False
+      TriggerOnCommit: False
+  TESTING_UNIT_TEST_RESULT_RETRIEVAL:
+    - Name: ILZ
+      TriggerOnCron: False
+      TriggerOnCommit: False
+      Deliverables:
+        - Name: 'Builds all iLean Central artifacts without deployment'
+          Tag: BUILD
+          Config:
+            job: 'HOB_iLean/AUTOMATION/AUTOMATION-Build-noProd-Env'
+    - Name: DMWF
+      TriggerOnCron: False
+      TriggerOnCommit: False
+      Deliverables:
+        - Name: 'Builds all DMWF artifacts without deployment'
+          Tag: BUILD
+          Config:
+            job: 'HOB_DMWF/General/AUTOMATION-DMWF-BUILD-BRANCH-Clone'
+            parameters:
+              - $class: 'StringParameterValue'
+                name: 'BRANCH_NAME'
+                value: 'origin/develop'
+    - Name: ISPANext
+      TriggerOnCron: False
+      TriggerOnCommit: False
+      Deliverables:
+        - Name: 'Builds all ISPA Next artifacts without deployment'
+          Tag: BUILD
+          Config:
+            job: 'TRAC/AUTOMATION-Dezentral-NET-ISPANextClient_Feature-Latest-Clone'
+  TESTING_DEPLOY_NO_BUILD:
+    - Name: ILZ
+      TriggerOnCron: False
+      TriggerOnCommit: False
+      Deliverables:
+        - Name: 'Deploy iLean Backend user-services-ear'
+          Tag: DEPLOY
+          Config:
+            job: 'HOB_iLean/PRE-PROD/Zentral-JAVA-iLeanBackendSnapshotDeployPREPROD-Latest'
+            parameters:
+              - $class: 'MavenMetadataParameterValue'
+                name: 'ILEAN_PARENT'
+                description: ''
+                groupId: 'com.bmw.ilean.central'
+                artifactId: 'central'
+                version: '21.3.0-SNAPSHOT'
+                packaging: 'pom'
+                classifier: ''
+                artifactUrl: ''
+              - $class: 'StringParameterValue'
+                name: 'DEPLOY_ARTIFACT'
+                value: 'user-services-ear'
+        - Name: 'Deploy iLean Backend device-services-ear'
+          Tag: DEPLOY
+          Config:
+            job: 'HOB_iLean/PRE-PROD/Zentral-JAVA-iLeanBackendSnapshotDeployPREPROD-Latest'
+            parameters:
+              - $class: 'MavenMetadataParameterValue'
+                name: 'ILEAN_PARENT'
+                description: ''
+                groupId: 'com.bmw.ilean.central'
+                artifactId: 'central'
+                version: '21.3.0-SNAPSHOT'
+                packaging: 'pom'
+                classifier: ''
+                artifactUrl: ''
+              - $class: 'StringParameterValue'
+                name: 'DEPLOY_ARTIFACT'
+                value: 'device-services-ear'
+        - Name: 'Deploy iLean Frontend'
+          Tag: DEPLOY
+          Config:
+            job: 'HOB_iLean/PRE-PROD/Zentral-JAVA-iLeanFrontendSnapshotDeployPREPROD-Latest'
+            parameters:
+              - $class: 'MavenMetadataParameterValue'
+                name: 'ILEAN_PARENT'
+                description: ''
+                groupId: 'com.bmw.ilean.central'
+                artifactId: 'central'
+                version: '21.3.0-SNAPSHOT'
+                packaging: 'pom'
+                classifier: ''
+                artifactUrl: ''
+  PREPROD:
+    - Name: ILZ
+      TriggerOnCron: False
+      TriggerOnCommit: True
+      Deliverables:
+        - Name: 'Deploy iLean Backend user-services-ear'
+          Tag: DEPLOY
+          Config:
+            job: 'HOB_iLean/PRE-PROD/Zentral-JAVA-iLeanBackendSnapshotDeployPREPROD-Latest'
+            parameters:
+              - $class: 'MavenMetadataParameterValue'
+                name: 'ILEAN_PARENT'
+                description: ''
+                groupId: 'com.bmw.ilean.central'
+                artifactId: 'central'
+                version: '21.3.0-SNAPSHOT'
+                packaging: 'pom'
+                classifier: ''
+                artifactUrl: ''
+              - $class: 'StringParameterValue'
+                name: 'DEPLOY_ARTIFACT'
+                value: 'user-services-ear'
+        - Name: 'Deploy iLean Backend device-services-ear'
+          Tag: DEPLOY
+          Config:
+            job: 'HOB_iLean/PRE-PROD/Zentral-JAVA-iLeanBackendSnapshotDeployPREPROD-Latest'
+            parameters:
+              - $class: 'MavenMetadataParameterValue'
+                name: 'ILEAN_PARENT'
+                description: ''
+                groupId: 'com.bmw.ilean.central'
+                artifactId: 'central'
+                version: '21.3.0-SNAPSHOT'
+                packaging: 'pom'
+                classifier: ''
+                artifactUrl: ''
+              - $class: 'StringParameterValue'
+                name: 'DEPLOY_ARTIFACT'
+                value: 'device-services-ear'
+        - Name: 'Deploy iLean Frontend'
+          Tag: DEPLOY
+          Config:
+            job: 'HOB_iLean/PRE-PROD/Zentral-JAVA-iLeanFrontendSnapshotDeployPREPROD-Latest'
+            parameters:
+              - $class: 'MavenMetadataParameterValue'
+                name: 'ILEAN_PARENT'
+                description: ''
+                groupId: 'com.bmw.ilean.central'
+                artifactId: 'central'
+                version: '21.3.0-SNAPSHOT'
+                packaging: 'pom'
+                classifier: ''
+                artifactUrl: ''
+    - Name: DMWF
+      TriggerOnCron: False
+      TriggerOnCommit: True
+      Deliverables:
+        - Name: 'Builds all DMWF artifacts without deployment'
+          Tag: BUILD
+          Config:
+            job: 'HOB_DMWF/General/AUTOMATION-DMWF-BUILD-BRANCH-Clone'
+        - Name: 'Deploy DMWF Backend'
+          Tag: DEPLOY
+          Config:
+            job: 'HOB_DMWF/PREPROD/DMWF-DEPLOY-PREPROD-BACKEND'
+        - Name: 'Deploy DMWF Frontend'
+          Tag: DEPLOY
+          Config:
+            job: 'HOB_DMWF/PREPROD/DMWF-DEPLOY-PREPROD-FRONTEND'
+            parameters:
+              - $class: 'MavenMetadataParameterValue'
+                name: 'DMWF_PARENT'
+                description: ''
+                groupId: 'com.bmw.dmwf'
+                artifactId: 'dmwf-build'
+                version: '21.1.0-SNAPSHOT'
+                packaging: 'pom'
+                classifier: ''
+                artifactUrl: ''
+  INT3:
+    - Name: ILZ
+      TriggerOnCron: True
+      TriggerOnCommit: True
+      Deliverables:
+        - Name: 'Deploy iLean Backend user-services-ear'
+          Tag: DEPLOY
+          Config:
+            job: 'HOB_iLean/INT3/Zentral-JAVA-iLeanBackendSnapshotDeployINT3-Latest'
+            parameters:
+              - $class: 'MavenMetadataParameterValue'
+                name: 'ILEAN_PARENT'
+                description: ''
+                groupId: 'com.bmw.ilean.central'
+                artifactId: 'central'
+                version: '21.3.0-SNAPSHOT'
+                packaging: 'pom'
+                classifier: ''
+                artifactUrl: ''
+              - $class: 'StringParameterValue'
+                name: 'DEPLOY_ARTIFACT'
+                value: 'user-services-ear'
+        - Name: 'Deploy iLean Backend device-services-ear'
+          Tag: DEPLOY
+          Config:
+            job: 'HOB_iLean/INT3/Zentral-JAVA-iLeanBackendSnapshotDeployINT3-Latest'
+            parameters:
+              - $class: 'MavenMetadataParameterValue'
+                name: 'ILEAN_PARENT'
+                description: ''
+                groupId: 'com.bmw.ilean.central'
+                artifactId: 'central'
+                version: '21.3.0-SNAPSHOT'
+                packaging: 'pom'
+                classifier: ''
+                artifactUrl: ''
+              - $class: 'StringParameterValue'
+                name: 'DEPLOY_ARTIFACT'
+                value: 'device-services-ear'
+        - Name: 'Deploy iLean Frontend'
+          Tag: DEPLOY
+          Config:
+            job: 'HOB_iLean/INT3/Zentral-JAVA-iLeanFrontendSnapshotDeployINT3-Latest'
+            parameters:
+              - $class: 'MavenMetadataParameterValue'
+                name: 'ILEAN_PARENT'
+                description: ''
+                groupId: 'com.bmw.ilean.central'
+                artifactId: 'central'
+                version: '21.3.0-SNAPSHOT'
+                packaging: 'pom'
+                classifier: ''
+                artifactUrl: ''
+    - Name: DMWF
+      TriggerOnCron: False
+      TriggerOnCommit: False
+      Deliverables:
+        - Name: 'Builds all DMWF artifacts without deployment'
+          Tag: BUILD
+          Config:
+            job: 'HOB_DMWF/General/AUTOMATION-DMWF-BUILD-BRANCH-Clone'
+            parameters:
+              - $class: 'StringParameterValue'
+                name: 'BRANCH_NAME'
+                value: 'origin/develop'
+        - Name: 'Deploy DMWF Backend'
+          Tag: DEPLOY
+          Config:
+            job: 'HOB_DMWF/INT-3/DMWF-DEPLOY-INT3-BACKEND'
+        - Name: 'Deploy DMWF Frontend'
+          Tag: DEPLOY
+          Config:
+            job: 'HOB_DMWF/INT-3/DMWF-DEPLOY-INT3-FRONTEND'
+            parameters:
+              - $class: 'MavenMetadataParameterValue'
+                name: 'DMWF_PARENT'
+                description: ''
+                groupId: 'com.bmw.dmwf'
+                artifactId: 'dmwf-build'
+                version: '21.1.0-SNAPSHOT'
+                packaging: 'pom'
+                classifier: ''
+                artifactUrl: ''
+  AWS:
+    - Name: ISPANextClient
+      TriggerOnCron: False
+      TriggerOnCommit: False
+      Deliverables:
+        - Name: 'Builds all ISPA Next Client artifacts without deployment'
+          Tag: BUILD
+          Config:
+            job: 'TRAC/Dezentral-NET-ISPANextClient_Develop-Latest'
+        - Name: 'Deploy ISPA Next Client'
+          Tag: DEPLOY
+          Config:
+            job: 'TRAC/Dezentral-NET-ISPANextClient_Develop-BUNDLE'
